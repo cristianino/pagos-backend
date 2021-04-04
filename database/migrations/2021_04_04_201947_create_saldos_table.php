@@ -17,7 +17,7 @@ class CreateSaldosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->mediumInteger('saldo')->default(0);
-            $table->mediumInteger('send_max')->nullable();
+            $table->mediumInteger('send_max')->nullable()->default(1000);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
