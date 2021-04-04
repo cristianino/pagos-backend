@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Payment;
 
 class PaymentsController extends Controller
 {
@@ -14,7 +15,12 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $payments = Payment::all();
+            return response(200, $payments);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -25,7 +31,13 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $payment = new Payment();
+            $payment->createWithSaldo($request);
+            return response(202, $payment);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -36,7 +48,12 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $payment = Payment::find($id);
+            return response(200, $payment);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
