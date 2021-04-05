@@ -23,4 +23,14 @@ class Payment extends Model
         $saldo->update();
         return $query->create($request->all());
     }
+
+    public function scopeValidateSaldo($query, $request)
+    {
+        $state = false;
+        $saldo = Saldo::where('user_id', $request->userFrom)->first();
+        if($saldo->saldo >= $request->valor || $saldo->send_max >= $request->valor){
+            return $state = true;
+        }
+        return $state; 
+    }
 }

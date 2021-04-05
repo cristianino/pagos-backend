@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Http\Requests\Payments;
 
 class PaymentsController extends Controller
 {
@@ -29,9 +30,12 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Payments $request)
     {
         try {
+            if(!Payment::validateSaldo($request)){
+                return response(422, 'El valor de la transacción supera el tope.');
+            }
             $payment = new Payment();
             $payment->createWithSaldo($request);
             return response(202, $payment);
