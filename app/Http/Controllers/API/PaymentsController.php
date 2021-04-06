@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Payment;
@@ -18,7 +19,7 @@ class PaymentsController extends Controller
     {
         try {
             $payments = Payment::all();
-            return response(200, $payments);
+            return response($payments, 200);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -33,12 +34,13 @@ class PaymentsController extends Controller
     public function store(Payments $request)
     {
         try {
+            $request->userFrom = Auth::user()->id;
             if(!Payment::validateSaldo($request)){
-                return response(422, 'El valor de la transacción supera el tope.');
+                return response('El valor de la transacción supera el tope.', 422);
             }
             $payment = new Payment();
             $payment->createWithSaldo($request);
-            return response(202, $payment);
+            return response($payment, 202);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -54,7 +56,7 @@ class PaymentsController extends Controller
     {
         try {
             $payment = Payment::find($id);
-            return response(200, $payment);
+            return response($payment, 200);
         } catch (\Throwable $th) {
             throw $th;
         }
