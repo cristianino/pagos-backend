@@ -11,6 +11,7 @@ window.Vue = require('vue');
 
 import App from './App.component.vue'
 import router from './router'
+import store from './store'
 
 /**
  * The following block of code may be used to automatically register your
@@ -45,6 +46,7 @@ Vue.component(
 
 const app = new Vue({
     router,
+    store,
     render: h => h(App),
     data: () => ({
     }),
