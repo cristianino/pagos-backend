@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Pagos Wupo</a>
+      <a class="navbar-brand" href="#">{{ appName }}</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -15,13 +15,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#"
+          <a v-show="isLogin" class="nav-item nav-link active" href="#"
             >Pagos <span class="sr-only">(current)</span></a
           >
-          <a class="nav-item nav-link active" href="#"
+          <a v-show="isLogin" class="nav-item nav-link active" href="#"
             >Historicos <span class="sr-only">(current)</span></a
           >
-          <a class="nav-item nav-link active" href="#"
+          <a v-show="!isLogin" class="nav-item nav-link active" href="/login"
             >Ingreso <span class="sr-only">(current)</span></a
           >
         </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   name: "App",
   components: {},
@@ -58,7 +59,12 @@ export default {
   props: {
     source: String,
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      appName: "appName",
+      isLogin: "login/loggedIn",
+    }),
+  },
 };
 </script>
 <style lang="scss" scoped>

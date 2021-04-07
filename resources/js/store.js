@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersist from "vuex-persist";
 
+import LoginStore from "./store/login.store";
+
 Vue.use(Vuex);
 
 const vuexPersist = new VuexPersist({
@@ -14,11 +16,19 @@ export default new Vuex.Store({
             name: "Pagos Wupo"
         }
     },
-    getters: {},
+    getters: {
+        appName(state) {
+            return state.app.name;
+        }},
     mutations: {},
     actions: {
+        clearStore({ dispatch }) {
+            dispatch("login/clearState", null, { root: true });
+        },
     },
     modules: {
+        login: LoginStore,
     },
     plugins: [vuexPersist.plugin]
+
 });

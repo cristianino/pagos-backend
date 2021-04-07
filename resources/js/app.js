@@ -13,6 +13,23 @@ import App from './App.component.vue'
 import router from './router'
 import store from './store'
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!store.getters['login/loggedIn']) {
+            next({
+                name: 'login',
+            })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
+})
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

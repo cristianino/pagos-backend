@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from './views/Home/Home.component.vue'
+import Login from './views/Login/Login.component.vue'
 import NotFound from './views/NotFound.vue'
 
 Vue.use(Router)
@@ -13,12 +14,22 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      alias: '/dashboard',
+      alias: '/welcome',
       components: {
         default: Home,
       },
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      components: {
+        default: Login,
+      },
+      meta: {
+        requiresAuth: false,
       }
     },
     {
@@ -27,6 +38,9 @@ export default new Router({
       component: {
         default: NotFound,
       },
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '*',

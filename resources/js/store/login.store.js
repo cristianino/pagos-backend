@@ -45,7 +45,7 @@ const actions = {
   retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
           axios
-              .post(`${ENV.API.URL}api/v1/login`, { // oauth/token`, {
+              .post(`${ENV.API.URL}oauth/token`, {
                   client_id: context.state.auth.grantToken.id,
                   client_secret: context.state.auth.grantToken.clientSecret,
                   grant_type: context.state.auth.grantToken.grantType,
